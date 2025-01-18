@@ -3,66 +3,185 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acne Detection</title>
+    <title>Acne Detection and Analysis</title>
     <style>
-      body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
+      /* General Styling */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
       }
-      h1,
-      h2,
+      html, body {
+        height: 100%;
+      }
+      body {
+        font-family: "Arial", sans-serif;
+        background-color: #f4f7f9;
+        color: #333;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Header Styling */
+      header {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 15px 20px;
+        text-align: center;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+      header h1 {
+        margin: 0;
+        font-size: 2rem;
+      }
+
+      /* Main Content Styling */
+      .container {
+        flex: 1; /* Pushes the footer to the bottom when content is short */
+        max-width: 800px;
+        margin: 20px auto;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        padding: 20px;
+      }
+      h2 {
+        color: #4caf50;
+        border-bottom: 2px solid #f4f7f9;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
       h3 {
+        margin-top: 20px;
+        font-size: 1.2rem;
+      }
+
+      /* Form Styling */
+      form {
+        text-align: center;
+        margin: 20px 0;
+      }
+      input[type="file"] {
+        display: inline-block;
+        margin-right: 10px;
+        padding: 8px 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      button[type="submit"] {
+        background-color: #4caf50;
+        color: #fff;
+        padding: 10px 15px;
+        font-size: 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+      button[type="submit"]:hover {
+        background-color: #45a049;
+      }
+
+      /* Image Display */
+      img {
+        max-width: 100%;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        margin-top: 20px;
+      }
+
+      /* Response Box */
+      .response {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 20px;
+        margin-top: 20px;
+      }
+      .response h3 {
         color: #333;
       }
-      img {
-        max-width: 500px;
-        border: 1px solid #ccc;
-        margin: 10px 0;
+      .response ul {
+        padding-left: 20px;
+        margin-top: 10px;
       }
-      .response {
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-top: 20px;
-        background-color: #f9f9f9;
+      .response ul li {
+        margin-bottom: 8px;
+      }
+
+      /* Footer Styling */
+      footer {
+        text-align: center;
+        padding: 10px 0;
+        background-color: #4caf50;
+        color: white;
+        font-size: 0.9rem;
+        margin-top: auto; /* Push the footer to the bottom */
       }
     </style>
   </head>
   <body>
-    <h1>Acne Detection using YOLOv8 and AI Analysis</h1>
-    <form action="/" method="post" enctype="multipart/form-data">
-      <input type="file" name="image" accept="image/*" required />
-      <button type="submit">Upload Image</button>
-    </form>
+    <!-- Header -->
+    <header>
+      <h1>Acne Detection and Analysis</h1>
+    </header>
 
-    {% if output_image %}
-    <h2>Detected Image</h2>
-    <img
-      src="{{ url_for('static', filename='uploads/' + output_image.split('/')[-1]) }}"
-      alt="Output Image"
-    />
+    <!-- Main Content -->
+    <div class="container">
+      <h2>Upload an Image</h2>
+      <p>
+        This project detects acne using YOLOv8 and provides AI-based analysis
+        for insights, precautions, and recommendations to improve skin health.
+      </p>
+      <form action="/" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" required />
+        <button type="submit">Upload Image</button>
+      </form>
 
-    <h2>Analysis Results</h2>
-    <div class="response">
-      <h3>Potential Causes:</h3>
-      <p>{{ response }}</p>
-      <h3>General Precautions:</h3>
-      <ul>
-        <li>
-          Maintain a clean face and avoid touching your skin with dirty hands.
-        </li>
-        <li>Use non-comedogenic skin care products.</li>
-        <li>Stay hydrated and eat a balanced diet.</li>
-        <li>Consider consulting a dermatologist for persistent issues.</li>
-      </ul>
-      <h3>Possible Solutions:</h3>
-      <ul>
-        <li>Regularly cleanse your face with suitable products.</li>
-        <li>
-          Apply topical treatments as advised by a healthcare professional.
-        </li>
-        <li>Consider lifestyle changes that promote skin health.</li>
-      </ul>
+      <!-- If an output image is available -->
+      {% if output_image %}
+      <h2>Detected Image</h2>
+      <img
+        src="{{ url_for('static', filename='uploads/' + output_image.split('/')[-1]) }}"
+        alt="Output Image"
+      />
+
+      <h2>Analysis Results</h2>
+      <div class="response">
+        <h3>Potential Causes:</h3>
+        <p>{{ response }}</p>
+
+        <h3>General Precautions:</h3>
+        <ul>
+          <li>
+            Maintain a clean face and avoid touching your skin with dirty hands.
+          </li>
+          <li>Use non-comedogenic skin care products.</li>
+          <li>Stay hydrated and eat a balanced diet.</li>
+          <li>Consider consulting a dermatologist for persistent issues.</li>
+        </ul>
+
+        <h3>Possible Solutions:</h3>
+        <ul>
+          <li>Regularly cleanse your face with suitable products.</li>
+          <li>
+            Apply topical treatments as advised by a healthcare professional.
+          </li>
+          <li>Consider lifestyle changes that promote skin health.</li>
+        </ul>
+      </div>
+      {% endif %}
     </div>
-    {% endif %}
+
+    <!-- Footer -->
+    <footer>
+      <p>
+        Disclaimer: This is a prototype project and does not provide medical
+        advice. For persistent or severe skin issues, consult a dermatologist.
+      </p>
+    </footer>
   </body>
 </html>

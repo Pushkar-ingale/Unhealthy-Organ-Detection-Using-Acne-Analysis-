@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acne Detection</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #333;
+      }
+      img {
+        max-width: 500px;
+        border: 1px solid #ccc;
+        margin: 10px 0;
+      }
+      .response {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Acne Detection using YOLOv8 and AI Analysis</h1>
+    <form action="/" method="post" enctype="multipart/form-data">
+      <input type="file" name="image" accept="image/*" required />
+      <button type="submit">Upload Image</button>
+    </form>
+
+    {% if output_image %}
+    <h2>Detected Image</h2>
+    <img
+      src="{{ url_for('static', filename='uploads/' + output_image.split('/')[-1]) }}"
+      alt="Output Image"
+    />
+
+    <h2>Analysis Results</h2>
+    <div class="response">
+      <h3>Potential Causes:</h3>
+      <p>{{ response }}</p>
+      <h3>General Precautions:</h3>
+      <ul>
+        <li>
+          Maintain a clean face and avoid touching your skin with dirty hands.
+        </li>
+        <li>Use non-comedogenic skin care products.</li>
+        <li>Stay hydrated and eat a balanced diet.</li>
+        <li>Consider consulting a dermatologist for persistent issues.</li>
+      </ul>
+      <h3>Possible Solutions:</h3>
+      <ul>
+        <li>Regularly cleanse your face with suitable products.</li>
+        <li>
+          Apply topical treatments as advised by a healthcare professional.
+        </li>
+        <li>Consider lifestyle changes that promote skin health.</li>
+      </ul>
+    </div>
+    {% endif %}
+  </body>
+</html>
